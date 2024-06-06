@@ -52,53 +52,53 @@ jobs:
           name: besu-${{ github.event.release.name }}.zip
           compression-level: 0
 
-  # testWindows:
-  #   runs-on: windows-2022
-  #   needs: artifacts
-  #   timeout-minutes: 10
-  #   steps:
-  #     - name: Set up Java
-  #       uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93
-  #       with:
-  #         distribution: temurin
-  #         java-version: 21
-  #     - name: Download zip
-  #       uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
-  #       with:
-  #         pattern: besu-*.zip
-  #         merge-multiple: true
-  #     - name: test Besu
-  #       run: |
-  #         dir
-  #         unzip besu-*.zip -d besu-tmp
-  #         cd besu-tmp
-  #         mv besu-* ../besu
-  #         cd ..
-  #         besu\bin\besu.bat --help
-  #         besu\bin\besu.bat --version
+  testWindows:
+    runs-on: windows-2022
+    needs: artifacts
+    timeout-minutes: 10
+    steps:
+      - name: Set up Java
+        uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Download zip
+        uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
+        with:
+          pattern: besu-*.zip
+          merge-multiple: true
+      - name: test Besu
+        run: |
+          dir
+          unzip besu-*.zip -d besu-tmp
+          cd besu-tmp
+          mv besu-* ../besu
+          cd ..
+          besu\bin\besu.bat --help
+          besu\bin\besu.bat --version
 
-  # publish:
-  #   runs-on: ubuntu-22.04
-  #   needs: [testWindows]
-  #   permissions:
-  #     contents: write
-  #   steps:
-  #     - name: Download archives
-  #       uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
-  #       with:
-  #         pattern: besu-*
-  #         merge-multiple: true
-  #         path: 'build/distributions'
-  #     - name: Upload Release assets
-  #       uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
-  #       with:
-  #         append_body: true
-  #         files: |
-  #           build/distributions/besu*.tar.gz
-  #           build/distributions/besu*.zip
-  #         body: |
-  #           ${{needs.artifacts.outputs.tarSha}}
-  #           ${{needs.artifacts.outputs.zipSha}}
+  publish:
+    runs-on: ubuntu-22.04
+    needs: [testWindows]
+    permissions:
+      contents: write
+    steps:
+      - name: Download archives
+        uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe
+        with:
+          pattern: besu-*
+          merge-multiple: true
+          path: 'build/distributions'
+      - name: Upload Release assets
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+        with:
+          append_body: true
+          files: |
+            build/distributions/besu*.tar.gz
+            build/distributions/besu*.zip
+          body: |
+            ${{needs.artifacts.outputs.tarSha}}
+            ${{needs.artifacts.outputs.zipSha}}
 
 
 
