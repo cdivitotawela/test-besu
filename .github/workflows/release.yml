@@ -79,7 +79,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-22.04
-    needs: [testWindows]
+    needs: [testWindows,artifacts]
     permissions:
       contents: write
     steps:
@@ -89,6 +89,10 @@ jobs:
           pattern: besu-*
           merge-multiple: true
           path: 'build/distributions'
+      - name: Output hash
+        run: |
+          echo tarSha=${{needs.artifacts.outputs.tarSha}}
+          echo zipSha=${{needs.artifacts.outputs.zipSha}}
       - name: Upload Release assets
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
         with:
