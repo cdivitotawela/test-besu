@@ -7,7 +7,7 @@ on:
         description: 'Besu version'
         required: true
       verify-latest-version:
-        description: 'Whether to check the version of the latest docker image'
+        description: 'Check latest container version'
         required: false
         type: boolean
         default: true
@@ -44,7 +44,7 @@ jobs:
           docker run -d $PLATFORM_OPT --name ${{ env.CONTAINER_NAME }} hyperledger/besu:${{ matrix.combination.tag }}
 
       - name: Verify besu container
-        run: bash .github/workflows/BesuContainerCheck.sh
+        run: bash .github/workflows/BesuContainerChecks.sh
         env:
           TAG: ${{ matrix.combination.tag }}
           VERSION: ${{ inputs.version }}
