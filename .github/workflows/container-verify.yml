@@ -1,4 +1,4 @@
-name: container-checks
+name: container verify
 
 on:
   workflow_dispatch:
