@@ -9,8 +9,11 @@ on:
       verify-latest-version:
         description: 'Check latest container version'
         required: false
-        type: boolean
-        default: true
+        type: choice
+        default: "true"
+        options:
+          - "true"
+          - "false"
 
 jobs:
   verify:

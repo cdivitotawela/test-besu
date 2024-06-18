@@ -260,9 +260,9 @@ jobs:
       contents: read
       actions: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      # - name: Checkout
+      #   uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - name: Trigger container verify
-        run: echo '{"version":"${{ github.event.release.name }}","verify-latest-version":true}' | gh workflow run container-verify.yml --json
+        run: echo '{"version":"${{ github.event.release.name }}","verify-latest-version":"true"}' | gh workflow run container-verify.yml --json
         env:
           GH_TOKEN: ${{ github.token }}
