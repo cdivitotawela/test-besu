@@ -261,3 +261,5 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - name: Trigger container verify
         run: echo '{"version":"${{ github.event.release.name }}"}' | gh workflow run container-checks.yml --json
+        env:
+          GH_TOKEN: ${{ github.token }}
