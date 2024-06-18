@@ -44,7 +44,7 @@ jobs:
           docker run -d $PLATFORM_OPT --name ${{ env.CONTAINER_NAME }} hyperledger/besu:${{ matrix.combination.tag }}
 
       - name: Verify besu container
-        run: bash .github/workflows/BesuContainerChecks.sh
+        run: bash .github/workflows/BesuContainerVerify.sh
         env:
           TAG: ${{ matrix.combination.tag }}
           VERSION: ${{ inputs.version }}
